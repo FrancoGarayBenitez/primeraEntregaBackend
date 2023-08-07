@@ -52,18 +52,21 @@ router.post("/api/carts/:cid/products/:pid", async (req, res) => {
         return res.status(404).json({ error: `El producto con el id proporcionado no existe` })
     }
 
+    //Obtengo índice del carrito indicado en la ruta
+    const indexCart = generalCart.findIndex((c) => c.id === cid)
     //Verifico existencia del producto en el carrito
     const foundProductInCart = cart.products.find((p) => {
         return p.product === pid
     })
 
+
     //Si existe le sumamos uno en su cantidad
     //Si no existe creamos un nuevo objeto con su cantidad inicial en 1.
     if (foundProductInCart) {
         const indexProduct = cart.products.findIndex((p) => p.product === pid)
-        generalCart[cid-1].products[indexProduct].quantity += 1
+        generalCart[indexCart].products[indexProduct].quantity += 1
     } else {
-        generalCart[cid-1].products.push({
+        generalCart[indexCart].products.push({
             product: pid,
             quantity: 1
         })
