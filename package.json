@@ -1,0 +1,15 @@
+{
+  "name": "primera_preentrega",
+  "version": "1.0.0",
+  "description": "Primera preEntrega. Backend. CoderHouse. Comisión 55525",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/main.js"
+  },
+  "author": "Franco Garay Benitez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.1"
+  }
+}
