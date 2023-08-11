@@ -13,15 +13,16 @@ class Contenedor {
           const lastId = objects.length > 0 ? objects[objects.length-1].id : 0
         //Creamos el ID al nuevo objeto en base al último.
           const newId = lastId + 1
+        
         //Creamos el nuevo objeto con los parámetros recibidos
           const newObj = {
             id: newId,
             ...object
         }
-        //Sumamos el nuevo objeto al array
-          objects.push(newObj)
-        //Lo guardamos en el archivo
-          await this.saveObjects(objects)         
+
+        //Lo guardamos en el array y actualizamos json.
+        objects.push(newObj)
+        await this.saveObjects(objects)
 
         } catch (error) {
             return new Error("Error al guardar el objeto")

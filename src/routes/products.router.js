@@ -30,9 +30,33 @@ router.get("/api/products/:pid", async (req, res)=>{
 //Agregar productos
 router.post("/api/products", async (req, res) => {
     try {
+        const data = await products.getAll()
         let newProduct = req.body
-        await products.save(newProduct)
-        res.json({ msg: `Producto agregado correctamente.` })
+
+        //Validamos que el code no se repita.
+        const found_product = data.find((product) => product.code === newProduct.code)
+
+        if (found_product) {
+            res.status(404).json({ error: `El producto con code ${newProduct.code} ya existe.` })
+        }
+
+        //Validamos campos vacíos.
+        let validarCampos = true
+
+        Object.values(newProduct).forEach((e) => {
+            if (e.toString().trim() === "") {
+                validarCampos = false
+            }
+        })
+
+        //Luego de validar lo agregamos al array
+        if (validarCampos) {
+            await products.save(newProduct)
+            res.json({ msg:"Producto agregado correctamente."})
+        } else {
+            res.status(404).json({error:"Error: Uno o más campos están vacíos."});
+        }
+        
     } catch (error) {
         res.status(404).json({ error: `Error al agregar un producto` })
     }
